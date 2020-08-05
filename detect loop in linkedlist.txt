@@ -1,0 +1,145 @@
+import java.lang.*;
+
+import java.util.*;
+
+class Node{
+   
+ int data;
+ 
+   Node next;
+    
+Node(int val){
+  
+      data = val;
+      
+  next = null;
+
+    }
+
+}
+
+class LinkedList
+{
+
+
+    public Node insert(Node head,int val){
+
+        if(head == null){
+
+            return new Node(val);
+
+        }
+
+        else{
+  
+          Node t = head;
+ 
+           while(t.next!=null){
+
+                t = t.next;
+  
+          }
+
+            t.next = new Node(val);
+ 
+           return head;
+ 
+       }
+
+    }
+
+    public void traverse(Node head){
+   
+     if(head == null){
+
+            System.out.println("No");
+   
+     }
+
+        else{
+      
+      Node t = head;
+     
+       while(t!=null){
+   
+             System.out.print(t.data+"->");
+    
+            t = t.next;
+   
+         }
+
+        } 
+
+    }
+
+    public Node reverse(Node head,int k){
+ 
+       Node prev = null;
+ 
+       Node cur = head;
+  
+      Node nex = null;
+    
+    int count =0;
+ 
+       while(cur!=null && count<k){
+  
+           nex = cur.next;
+     
+       cur.next = prev;
+ 
+           prev = cur;
+   
+         cur = nex;
+     
+       count++;
+   
+     }
+ 
+       if(nex!=null){
+ 
+           Node revHead = reverse(nex,k);
+ 
+           head.next = revHead;
+    
+    }
+        
+return prev;
+ 
+   }
+
+}
+
+public class Main
+{
+	
+public static void main(String[] args) {
+
+		LinkedList list = new LinkedList();
+		  
+  Node head = null;
+
+	head =	list.insert(head,10);
+
+	head =	list.insert(head,20);
+
+	head =	list.insert(head,30);
+
+	head =	list.insert(head,40);
+
+	head=	list.insert(head,50);
+	
+	head=list.insert(head,60);
+
+		list.traverse(head);
+
+		System.out.println();
+
+	  head = 	list.reverse(head,3);
+
+		list.traverse(head);
+
+	}
+
+
+}
