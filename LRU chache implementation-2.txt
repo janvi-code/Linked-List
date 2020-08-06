@@ -1,0 +1,100 @@
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+class Node
+{
+	int data;
+	Node next;
+	Node prev;
+	Node(int val){
+		data = val;
+		next = null;
+		prev = null;
+	}
+}
+class doublyLinkedList{
+	Map<Integer,Node> map = new HashMap<>();
+	Node head = null;
+	public void insert(int val) {
+		Node newNode  = new Node(val);
+		if(map.size()<4 && map.containsKey(val)==false) {
+			map.put(val,newNode);
+			if(head == null) {
+				head = map.get(val);
+			}else {
+				Node t = head;
+				head = map.get(val);
+				head.next = t;
+				t.prev = head;
+			}
+		}
+		else if(map.size()<=4 && map.containsKey(val)==true) {
+			Node cur = map.get(val);
+			if(cur!=head) {
+				Node p = cur.prev;
+				if(cur.next!=null) {
+					Node n = cur.next;
+					cur.prev = null;
+					cur.next = null;
+					p.next = n;
+					n.prev = p;
+					Node t = head;
+					head = cur;
+					head.next = t;
+					t.prev = head;
+					
+				}else {
+					cur.prev = null;
+					p.next = null;
+					Node t = head;
+					head = cur;
+					head.next = t;
+					t.prev = head;
+				}
+			}
+		}
+		else if(map.size()==4 && map.containsKey(val)==false) {
+			Node t = head;
+			while(t.next!=null) {
+				t = t.next;
+			}
+			map.remove(t.data);
+			map.put(val,new Node(val));
+			Node p = t.prev;
+			t.prev = null;
+			p.next = null;
+			
+			Node neu = head;
+			head = map.get(val);
+			head.next = neu;
+			neu.prev = head;
+		}
+	}
+	public void traverse() {
+		Node t = head;
+		while(t!=null) {
+			System.out.print(t.data+"->");
+			t = t.next;
+		}
+	}
+	public void print() {
+		for(Map.Entry<Integer, Node> x : map.entrySet())
+		  System.out.println(x.getKey());
+	}
+}
+class Main
+ {
+	public static void main (String[] args)
+	 {
+	     Scanner sc = new Scanner(System.in);
+	     int n = sc.nextInt();
+	     doublyLinkedList list = new doublyLinkedList();
+	     for(int i=0;i<n;i++) {
+	    	  list.insert(sc.nextInt());
+	    list.traverse(); 
+	    System.out.println();
+	     }
+	     list.print();
+	 }
+ }
